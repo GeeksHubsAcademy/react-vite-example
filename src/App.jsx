@@ -21,9 +21,10 @@ function App() {
             <Route path="*" element={<h1>404</h1>} />
           </Routes>
         </section>
-        <footer>
-          <p>Here is my footer</p>
-        </footer>
+        <Routes>
+          <Route path="/movies" element={<footer>movies footer</footer>} />
+          <Route path="/movie/:id" element={<footer>movie footer</footer>} />
+        </Routes>
       </main>
     </BrowserRouter>
   );
