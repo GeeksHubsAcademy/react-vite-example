@@ -1,76 +1,32 @@
 import "./style.css";
-import Number from "./Number.jsx";
-import React, { useEffect, useState } from "react";
-
+import { BrowserRouter, Link, Navigate, Route, Routes } from "react-router-dom";
+import Movies from "./pages/Movies.jsx";
+import Movie from "./pages/Movie.jsx";
 function App() {
-  const [number, setNumber] = useState(1);
-  const incrementNumber = () => setNumber(number + 1);
-  let list = [
-    { id: 1, name: "one" },
-    { id: 2, name: "two" },
-    { id: 3, name: "three" },
-    { id: 4, name: "four" },
-  ];
-  let nodes = list.map(num => <div key={num.id}>{num.name}</div>);
   return (
-    <main>
-      <section
-        className={number % 2 === 0 ? "even" : "odd"}
-        onClick={incrementNumber}
-      >
-        <Number>{number}</Number>
-      </section>
-      <section>
-        {nodes}
-      </section>
-      <hr />
-     {number < 10  && <ClassComponent text={'holaa' + number}/>}
-     {number <= 5 && number > 3  && <FunctionComponent text={'holaa' + number}/>}
-    </main>
+    <BrowserRouter>
+      <main>
+        <header>
+          <nav>
+            <Link to="/movies">Movies</Link>
+            <Link to="/movie/1">Movie 1</Link>
+            <Link to="/movie/2">Movie 2</Link>
+          </nav>
+        </header>
+        <section>
+          <Routes>
+            <Route path="/" element={<Navigate to="/movies" />} />
+            <Route path="/movies" element={<Movies />} />
+            <Route path="/movie/:identificador" element={<Movie />} />
+            <Route path="*" element={<h1>404</h1>} />
+          </Routes>
+        </section>
+        <footer>
+          <p>Here is my footer</p>
+        </footer>
+      </main>
+    </BrowserRouter>
   );
-}
-
-
-class ClassComponent extends React.Component {
-
-  constructor(props) {
-    super(props);
-    // console.log('constructor');
-  }
-  componentDidMount() {
-    // console.log('componentDidMount');
-  }
-  componentDidUpdate() {
-    // console.log('componentDidUpdate');
-  }
-  componentWillUnmount() {
-    // console.log('componentWillUnmount');
-  }
-
-  render() {
-    // console.log('render');
-    return <div>Class Component: {this.props.text}</div>;
-  }
-}
-
-function FunctionComponent(props) {
-    console.log('render');
-
-    useEffect(() => {
-      console.log('componentDidUpdate');
-    }, [props.text])
-
-    useEffect(() => {
-      console.log('componentDidMount');
-
-      return () => {
-        console.log('componentWillUnmount');
-      }
-    },[])
-
-
-  return <div>Function Component: {props.text}</div>;
-
 }
 
 export default App;
